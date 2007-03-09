@@ -1,10 +1,11 @@
 Summary:	dojo - the JavaScript Toolkit
+Summary(pl.UTF-8):	dojo - toolkit do JavaScriptu
 Name:		dojo
 Version:	0.4.1
 Release:	0.1
 License:	AFL 2.1 or BSD
 Group:		Applications/WWW
-Source0:	http://download.dojotoolkit.org/release-0.4.1/%{name}-%{version}-core.tar.gz
+Source0:	http://download.dojotoolkit.org/release-%{version}/%{name}-%{version}-core.tar.gz
 # Source0-md5:	90ff4443c6fca40663ee44edd3761373
 URL:		http://www.dojotoolkit.org/
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -21,6 +22,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Dojo is a portable JavaScript toolkit for web application developers
 and JavaScript professionals. Dojo solves real-world problems by
 providing powerful abstractions and solid, tested implementations.
+
+%description -l pl.UTF-8
+dojo to przenośny toolkit do JavaScriptu dla twórców aplikacji WWW i
+profesjonalistów javascriptowych. dojo rozwiązuje rzeczywiste problemy
+dostarczając potężne abstrakcje i solidne, przetestowane
+implementacje.
 
 %prep
 %setup -q -n %{name}-%{version}-core
@@ -41,6 +48,9 @@ cp -a dojo.js $RPM_BUILD_ROOT%{_appdir}
 install apache.conf $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install apache.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %triggerin -- apache1 < 1.3.37-3, apache1-base
 %webapp_register apache %{_webapp}
 
@@ -52,9 +62,6 @@ install apache.conf $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 
 %triggerun -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
